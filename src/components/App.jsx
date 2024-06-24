@@ -1,68 +1,57 @@
-import { useIntegration } from '@tma.js/react-router-integration';
-import {
-  bindMiniAppCSSVars,
-  bindThemeParamsCSSVars,
-  bindViewportCSSVars,
-  initNavigator, useLaunchParams,
-  useMiniApp,
-  useThemeParams,
-  useViewport,
-} from '@tma.js/sdk-react';
+import WebApp from '@twa-dev/sdk';
 import { AppRoot } from '@telegram-apps/telegram-ui';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   Navigate,
   Route,
-  Router,
+  BrowserRouter,
   Routes,
+  useLocation,
+  useNavigate,
 } from 'react-router-dom';
 
 import { routes } from '@/navigation/routes.jsx';
+
+function BackButtonManipulator() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    function onClick() {
+      navigate(-1);
+    }
+    WebApp.BackButton.onClick(onClick);
+
+    return () => WebApp.BackButton.offClick(onClick);
+  }, [navigate]);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      WebApp.BackButton.isVisible && WebApp.BackButton.hide();
+    } else {
+      !WebApp.BackButton.isVisible && WebApp.BackButton.show();
+    }
+  }, [location]);
+
+  return null;
+}
 
 /**
  * @return {JSX.Element}
  */
 export function App() {
-  const lp = useLaunchParams();
-  const miniApp = useMiniApp();
-  const themeParams = useThemeParams();
-  const viewport = useViewport();
-
-  useEffect(() => {
-    return bindMiniAppCSSVars(miniApp, themeParams);
-  }, [miniApp, themeParams]);
-
-  useEffect(() => {
-    return bindThemeParamsCSSVars(themeParams);
-  }, [themeParams]);
-
-  useEffect(() => {
-    return viewport && bindViewportCSSVars(viewport);
-  }, [viewport]);
-
-  // Create a new application navigator and attach it to the browser history, so it could modify
-  // it and listen to its changes.
-  const navigator = useMemo(() => initNavigator('app-navigation-state'), []);
-  const [location, reactNavigator] = useIntegration(navigator);
-
-  // Don't forget to attach the navigator to allow it to control the BackButton state as well
-  // as browser history.
-  useEffect(() => {
-    navigator.attach();
-    return () => navigator.detach();
-  }, [navigator]);
-
   return (
     <AppRoot
-      appearance={miniApp.isDark ? 'dark' : 'light'}
-      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
+      appearance={WebApp.colorScheme}
+      platform={['macos', 'ios'].includes(WebApp.platform) ? 'ios' : 'base'}
     >
-      <Router location={location} navigator={reactNavigator}>
+      <BrowserRouter>
+        <BackButtonManipulator/>
         <Routes>
           {routes.map((route) => <Route key={route.path} {...route} />)}
           <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
-      </Router>
+      </BrowserRouter>
     </AppRoot>
   );
 }

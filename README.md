@@ -6,7 +6,7 @@ Mini Apps platform using the following technologies and libraries:
 - [React](https://react.dev/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-- [@tma.js SDK](https://docs.telegram-mini-apps.com/packages/tma-js-sdk)
+- [Telegram SDK](https://core.telegram.org/bots/webapps#initializing-mini-apps)
 - [Telegram UI](https://github.com/Telegram-Mini-Apps/TelegramUI)
 - [Vite](https://vitejs.dev/)
 
@@ -62,23 +62,14 @@ After this, you will see a similar message in your terminal:
 ```bash
 VITE ready in 275 ms
 
-➜  Local:   http://localhost:5173/reactjs-template
+➜  Local:   http://localhost:5173/reactjs-js-tsdk-template
 ➜  press h + enter to show help
 ```
 
 To view the application, you need to open the `Local`
-link (`http://localhost:5173/reactjs-template` in this example) in your browser:
+link (`http://localhost:5173/reactjs-js-tsdk-template` in this example) in your browser:
 
 ![Application](assets/application.png)
-
-It is important to note that some libraries in this template, such as `@tma.js/sdk`, are not
-intended for use outside of Telegram.
-
-Nevertheless, they appear to function properly. This is because the `src/mockEnv.js` file, which is
-imported in the application's entry point (`src/index.js`), employs the `mockTelegramEnv` function
-to simulate the Telegram environment. This trick convinces the application that it is running in a
-Telegram-based environment. Therefore, be cautious not to use this function in production mode
-unless you fully understand its implications.
 
 ### Run Inside Telegram
 
@@ -100,11 +91,11 @@ After uncommenting the function, run the `dev` script again and observe the outp
 ```bash
 VITE ready in 331 ms
 
-➜  Local:   https://localhost:5173/reactjs-template
+➜  Local:   https://localhost:5173/reactjs-js-tsdk-template
 ➜  press h + enter to show help
 ```
 
-Visiting the `Local` link (`https://localhost:5173/reactjs-template` in this example) in your
+Visiting the `Local` link (`https://localhost:5173/reactjs-js-tsdk-template` in this example) in your
 browser, you will see the following warning:
 
 ![SSL Warning](assets/ssl-warning.png)
@@ -131,10 +122,10 @@ Here is an example of the output you will see:
 ```bash
 VITE v5.2.12  ready in 257 ms
 
-➜  Local:   https://localhost:5173/reactjs-template
-➜  Network: https://172.27.224.1:5173/reactjs-template
-➜  Network: https://172.19.32.1:5173/reactjs-template
-➜  Network: https://192.168.0.171:5173/reactjs-template
+➜  Local:   https://localhost:5173/reactjs-js-tsdk-template
+➜  Network: https://172.27.224.1:5173/reactjs-js-tsdk-template
+➜  Network: https://172.19.32.1:5173/reactjs-js-tsdk-template
+➜  Network: https://192.168.0.171:5173/reactjs-js-tsdk-template
 ```
 
 All `Network` links listed here are accessible to devices on the same network. Using these links,
@@ -243,5 +234,4 @@ project's information.
 ## Useful Links
 
 - [Platform documentation](https://docs.telegram-mini-apps.com/)
-- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
 - [Telegram developers community chat](https://t.me/devs)

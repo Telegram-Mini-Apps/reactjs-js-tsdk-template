@@ -1,5 +1,5 @@
-import { classNames, useUtils } from '@tma.js/sdk-react';
 import { useCallback } from 'react';
+import WebApp from '@twa-dev/sdk';
 import { Link as RouterLink } from 'react-router-dom';
 
 import './Link.css';
@@ -14,8 +14,6 @@ export function Link({
   to,
   ...rest
 }) {
-  const utils = useUtils();
-
   const onClick = useCallback((e) => {
     propsOnClick?.(e);
 
@@ -36,16 +34,16 @@ export function Link({
 
     if (isExternal) {
       e.preventDefault();
-      return utils.openLink(targetUrl.toString());
+      return WebApp.openLink(targetUrl.toString());
     }
-  }, [to, propsOnClick, utils]);
+  }, [to, propsOnClick]);
 
   return (
     <RouterLink
       {...rest}
       to={to}
       onClick={onClick}
-      className={classNames(className, 'link')}
+      className={[className, 'link'].filter(Boolean).join(' ')}
     />
   );
 }

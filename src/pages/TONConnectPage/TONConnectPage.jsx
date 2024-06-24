@@ -1,12 +1,11 @@
-import { useUtils } from '@tma.js/sdk-react';
+import WebApp from '@twa-dev/sdk';
 import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 import {
   Avatar,
   Cell,
   List,
   Navigation,
-  Placeholder,
-  Section,
+  Placeholder, Section,
   Text,
   Title,
 } from '@telegram-apps/telegram-ui';
@@ -20,8 +19,6 @@ import './TONConnectPage.css';
  */
 export function TONConnectPage() {
   const wallet = useTonWallet();
-  const utils = useUtils();
-
   if (!wallet) {
     return (
       <Placeholder
@@ -63,7 +60,7 @@ export function TONConnectPage() {
               subtitle={wallet.appName}
               onClick={(e) => {
                 e.preventDefault();
-                utils.openLink(wallet.aboutUrl);
+                WebApp.openLink(wallet.aboutUrl);
               }}
             >
               <Title level='3'>{wallet.name}</Title>

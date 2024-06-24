@@ -1,6 +1,6 @@
-import { SDKProvider, useLaunchParams } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { useEffect, useMemo } from 'react';
+import WebApp from '@twa-dev/sdk';
 
 import { App } from '@/components/App.jsx';
 import { ErrorBoundary } from '@/components/ErrorBoundary.jsx';
@@ -30,7 +30,7 @@ function ErrorBoundaryError({ error }) {
  * @returns {JSX.Element}
  */
 export function Inner() {
-  const debug = useLaunchParams().startParam === 'debug';
+  const debug = WebApp.initDataUnsafe.start_param === 'debug';
   const manifestUrl = useMemo(() => {
     return new URL('tonconnect-manifest.json', window.location.href).toString();
   }, []);
@@ -44,9 +44,7 @@ export function Inner() {
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <SDKProvider acceptCustomStyles debug={debug}>
-        <App/>
-      </SDKProvider>
+      <App/>
     </TonConnectUIProvider>
   );
 }
@@ -57,7 +55,7 @@ export function Inner() {
 export function Root() {
   return (
     <ErrorBoundary fallback={ErrorBoundaryError}>
-      <Inner />
+      <Inner/>
     </ErrorBoundary>
   );
 }

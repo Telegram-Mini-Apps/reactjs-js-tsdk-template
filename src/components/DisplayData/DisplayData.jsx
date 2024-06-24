@@ -1,4 +1,3 @@
-import { isRGB } from '@tma.js/sdk-react';
 import { Cell, Checkbox, Section } from '@telegram-apps/telegram-ui';
 
 import { RGB } from '@/components/RGB/RGB.jsx';
@@ -9,10 +8,11 @@ import './DisplayData.css';
 /**
  * @typedef {object} DisplayDataRow
  * @property {string} title
- * @property {string | boolean | import('react').ReactNode | import('@tma.js/sdk-react').RGB} [value]
+ * @property {string | boolean | import('react').ReactNode} [value]
  */
 
 /**
+ * @param {import('react').ReactNode} header - section header.
  * @param {DisplayDataRow[]} rows - list of rows to be displayed.
  * @return {JSX.Element}
  */
@@ -28,7 +28,7 @@ export function DisplayData({ header, rows }) {
           if ('type' in item) {
             valueNode = <Link to={item.value}>Open</Link>;
           } else if (typeof item.value === 'string') {
-            valueNode = isRGB(item.value)
+            valueNode = item.value.match(/^#[a-f0-9]{3,6}$/i)
               ? <RGB color={item.value}/>
               : item.value;
           } else if (typeof item.value === 'boolean') {
