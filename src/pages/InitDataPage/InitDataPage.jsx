@@ -4,8 +4,6 @@ import WebApp from '@twa-dev/sdk';
 
 import { DisplayData } from '@/components/DisplayData/DisplayData.jsx';
 
-import './InitDataPage.css';
-
 // TODO: @twa-dev/types is outdated.
 /**
  * @typedef {import('@twa-dev/types').WebAppUser} ExactWebAppUser
